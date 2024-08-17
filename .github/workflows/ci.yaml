@@ -11,14 +11,14 @@ jobs:
     container: cypress/included:13.13.3
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Cypress run
         uses: cypress-io/github-action@v6.7.1
 
       - name: Archive Test Report (If Fails)
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: test-report
           path: |
