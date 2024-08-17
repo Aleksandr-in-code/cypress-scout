@@ -1,6 +1,6 @@
 describe('E2E Tests of demoblaze.com', () => {
 
-const signUsername = "LeonideTest321324325";
+const signUsername = "LeonideTest32112324325";
 const signPassword = "Qwerty123";
 
     it('As a user, purchase a monitor without authorization and registration', () => {
