@@ -1,3 +1,4 @@
+// Cypress._.times(20, () => {
 describe('E2E Tests of demoblaze.com', () => {
 
 const signUsername = ("Tesg" + Date.now());
@@ -24,6 +25,7 @@ const signPassword = "Qwerty123";
       cy.get('#signin2').click();
       cy.get('#sign-username').invoke('val', signUsername);
       cy.get('#sign-password').invoke('val', signPassword);
+      cy.wait(2000);
       cy.get('#signInModal > .modal-dialog > .modal-content > .modal-footer > .btn-primary').click();
       cy.get('[onclick="byCat(\'notebook\')"]').click();
       cy.get(':nth-child(1) > .card > .card-block > .card-title > .hrefch').click();
@@ -44,6 +46,7 @@ const signPassword = "Qwerty123";
       cy.get('#login2').click();
       cy.get('#loginusername').invoke('val', signUsername);
       cy.get('#loginpassword').invoke('val', signPassword);
+      cy.wait(2000);
       cy.get('#logInModal > .modal-dialog > .modal-content > .modal-footer > .btn-primary').click();
       cy.get(':nth-child(1) > .card > .card-block > .card-title > .hrefch').click();
       cy.get('.col-sm-12 > .btn').click();
@@ -58,3 +61,4 @@ const signPassword = "Qwerty123";
       cy.get('#orderModal > .modal-dialog > .modal-content > .modal-footer > .btn-primary').click();
     });
   });
+// });
