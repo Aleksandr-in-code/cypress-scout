@@ -18,8 +18,8 @@ const signPassword = "Qwerty123";
         cy.get('#month').invoke('val', "09");
         cy.get('#year').invoke('val', "2024");
         cy.get('#orderModal > .modal-dialog > .modal-content > .modal-footer > .btn-primary').click();
-        cy.wait(2000);
-    });
+      
+      });
   
     it('As a user, Purchase a laptop through registration', () => {
       cy.visit('https://www.demoblaze.com');
