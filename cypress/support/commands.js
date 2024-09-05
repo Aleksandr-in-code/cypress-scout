@@ -23,3 +23,23 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+// signUp demoblaze.com
+Cypress.Commands.add('signUp', (signUsername, signPassword) => {
+    cy.intercept('POST', '/signup').as("signupUser")
+    cy.get('#signin2').click();
+    cy.get('#sign-username').invoke('val', signUsername).should('be.visible');
+    cy.get('#sign-password').invoke('val', signPassword).should('be.visible');
+    cy.contains('.btn.btn-primary', 'Sign up').click();
+    cy.wait('@signupUser');
+  });
+
+// login demoblaze.com
+  Cypress.Commands.add('login', (username, password) => {
+    cy.intercept('POST', '/login').as("loginUser");
+    cy.get('#login2').click();
+    cy.get('#loginusername').invoke('val', username).should('be.visible');
+    cy.get('#loginpassword').invoke('val', password).should('be.visible');
+    cy.contains('.btn.btn-primary', 'Log in').click();
+    cy.wait('@loginUser');
+  });
