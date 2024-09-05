@@ -26,7 +26,7 @@
 
 // signUp demoblaze.com
 Cypress.Commands.add('signUp', (username, password) => {
-    cy.intercept('POST', '/signup').as("signupUser")
+    cy.intercept('POST', '/signup').as("signupUser");
     cy.get('#signin2').click();
     cy.get('#sign-username').invoke('val', username);
     cy.get('#sign-password').invoke('val', password);
