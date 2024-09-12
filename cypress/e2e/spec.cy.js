@@ -3,6 +3,7 @@ describe('E2E Tests of demoblaze.com', () => {
 
   const signUsername = ("Tesg" + Date.now());
   const signPassword = "Qwerty123";
+  const staticUsername = "StaticUsername";
   const monitorName = 'Apple monitor 24';
   const laptopName = 'Sony vaio i5';
   const phoneName = 'Samsung galaxy s6';
@@ -10,6 +11,7 @@ describe('E2E Tests of demoblaze.com', () => {
   beforeEach(() => {
     cy.visit('https://www.demoblaze.com/');
     cy.intercept('Post', '/deletecart').as('deletecart');
+
   });
 
     it('As a user, purchase a monitor without authorization and registration', () => {
@@ -27,11 +29,11 @@ describe('E2E Tests of demoblaze.com', () => {
       cy.get('#year').invoke('val', "2024");
       cy.contains('.btn.btn-primary', 'Purchase').click();
       cy.contains('.sweet-alert', 'Thank you for your purchase!').should('be.visible');
-      cy.wait('@deletecart');
+      cy.wait('@deletecart').its('response.statusCode').should('eq', 200);
     });
     
     it('As a user, Purchase a laptop through registration', () => {
-      cy.signUp(signUsername, signPassword)
+      cy.signUp(signUsername, signPassword);
       cy.contains('#itemc', 'Laptops').click();
       cy.contains('.hrefch', laptopName).click();
       cy.contains('a.btn', 'Add to cart').click();
@@ -46,12 +48,12 @@ describe('E2E Tests of demoblaze.com', () => {
       cy.get('#year').invoke('val', "2024");
       cy.contains('.btn.btn-primary', 'Purchase').click();
       cy.contains('.sweet-alert', 'Thank you for your purchase!').should('be.visible');
-      cy.wait('@deletecart');
+      cy.wait('@deletecart').its('response.statusCode').should('eq', 200);
     });
 
 
     it('As a user, Purchase a phone through authorization', () => {
-      cy.login(signUsername, signPassword)
+      cy.login(staticUsername, signPassword);
       cy.contains('.hrefch', phoneName).click();
       cy.contains('a.btn', 'Add to cart').click();
       cy.get('#cartur').click();
@@ -65,6 +67,6 @@ describe('E2E Tests of demoblaze.com', () => {
       cy.get('#year').invoke('val', "2024");
       cy.contains('.btn.btn-primary', 'Purchase').click();
       cy.contains('.sweet-alert', 'Thank you for your purchase!').should('be.visible');
-      cy.wait('@deletecart');
+      cy.wait('@deletecart').its('response.statusCode').should('eq', 200);
     });
 });
