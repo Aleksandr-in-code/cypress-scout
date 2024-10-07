@@ -9,7 +9,7 @@ describe('E2E Tests of demoblaze.com', () => {
   const phoneName = 'Samsung galaxy s6';
 
   beforeEach(() => {
-    cy.visit('https://www.demoblaze.com/');
+    cy.visit('/');
     cy.intercept('Post', '/deletecart').as('deletecart');
     cy.intercept('POST', '/viewcart').as('viewcart');
 
