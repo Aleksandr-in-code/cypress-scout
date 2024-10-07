@@ -31,7 +31,8 @@ Cypress.Commands.add('signUp', (username, password) => {
     cy.get('#sign-username').invoke('val', username);
     cy.get('#sign-password').invoke('val', password);
     cy.contains('.btn.btn-primary', 'Sign up').click();
-    cy.wait('@signupUser');
+    cy.wait('@signupUser', { timeout: 10000 });
+    
   });
 
 // login demoblaze.com
@@ -41,5 +42,17 @@ Cypress.Commands.add('signUp', (username, password) => {
     cy.get('#loginusername').invoke('val', username);
     cy.get('#loginpassword').invoke('val', password);
     cy.contains('.btn.btn-primary', 'Log in').click();
-    cy.wait('@loginUser');
+    cy.wait('@loginUser');  
   });
+
+  // Fill orderForm
+  // Cypress.Commands.add('finishOrder', () => {
+  //   cy.get('#name').invoke('val', "Jimmy");
+  //   cy.get('#country').invoke('val', "Canada");
+  //   cy.get('#city').invoke('val', "Edmonton");
+  //   cy.get('#card').invoke('val', "4111 1111 1111 1111");
+  //   cy.get('#month').invoke('val', "09");
+  //   cy.get('#year').invoke('val', "2024");
+  //   cy.contains('.btn.btn-primary', 'Purchase').click();
+  //   cy.contains('.sweet-alert', 'Thank you for your purchase!').should('be.visible');
+  // });
