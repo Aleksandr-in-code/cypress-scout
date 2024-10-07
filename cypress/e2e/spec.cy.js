@@ -24,12 +24,7 @@ describe('E2E Tests of demoblaze.com', () => {
       cy.contains('.success', monitorName).should('be.visible');
       cy.expect('.success').to.have.length.at.least(1); // .should('have.length', 1)
       cy.contains('.btn.btn-success', 'Place Order').click();
-      cy.get('#name').invoke('val', "Jimmy");
-      cy.get('#country').invoke('val', "Canada");
-      cy.get('#city').invoke('val', "Edmonton");
-      cy.get('#card').invoke('val', "4111 1111 1111 1111");
-      cy.get('#month').invoke('val', "09");
-      cy.get('#year').invoke('val', "2024");
+      cy.fillOrderForm();
       cy.contains('.btn.btn-primary', 'Purchase').click();
       cy.contains('.sweet-alert', 'Thank you for your purchase!').should('be.visible');
       cy.wait('@deletecart').its('response.statusCode').should('eq', 200);
@@ -45,12 +40,7 @@ describe('E2E Tests of demoblaze.com', () => {
       cy.contains('.success', laptopName, { timeout: 10000 }).should('be.visible');
       cy.expect('.success').to.have.length.at.least(1); // .should('have.length', 1)
       cy.contains('.btn.btn-success', 'Place Order').click();
-      cy.get('#name').invoke('val', "Jimmy");
-      cy.get('#country').invoke('val', "Canada");
-      cy.get('#city').invoke('val', "Edmonton");
-      cy.get('#card').invoke('val', "4111 1111 1111 1111");
-      cy.get('#month').invoke('val', "09");
-      cy.get('#year').invoke('val', "2024");
+      cy.fillOrderForm();
       cy.contains('.btn.btn-primary', 'Purchase').click();
       cy.contains('.sweet-alert', 'Thank you for your purchase!').should('be.visible');
       cy.wait('@deletecart').its('response.statusCode').should('eq', 200);
@@ -66,12 +56,7 @@ describe('E2E Tests of demoblaze.com', () => {
       cy.contains('.success', phoneName, { timeout: 10000 }).should('be.visible');
       cy.expect('.success').to.have.length.at.least(1);
       cy.contains('.btn.btn-success', 'Place Order').click();
-      cy.get('#name').invoke('val', "Jimmy");
-      cy.get('#country').invoke('val', "Canada");
-      cy.get('#city').invoke('val', "Edmonton");
-      cy.get('#card').invoke('val', "4111 1111 1111 1111");
-      cy.get('#month').invoke('val', "09");
-      cy.get('#year').invoke('val', "2024");
+      cy.fillOrderForm();
       cy.contains('.btn.btn-primary', 'Purchase').click();
       cy.contains('.sweet-alert', 'Thank you for your purchase!').should('be.visible');
       cy.wait('@deletecart').its('response.statusCode').should('eq', 200);
