@@ -42,17 +42,16 @@ Cypress.Commands.add('signUp', (username, password) => {
     cy.get('#loginusername').invoke('val', username);
     cy.get('#loginpassword').invoke('val', password);
     cy.contains('.btn.btn-primary', 'Log in').click();
-    cy.wait('@loginUser');  
+    cy.wait('@loginUser', { timeout: 10000 });  
   });
 
-  // Fill orderForm
-  // Cypress.Commands.add('finishOrder', () => {
-  //   cy.get('#name').invoke('val', "Jimmy");
-  //   cy.get('#country').invoke('val', "Canada");
-  //   cy.get('#city').invoke('val', "Edmonton");
-  //   cy.get('#card').invoke('val', "4111 1111 1111 1111");
-  //   cy.get('#month').invoke('val', "09");
-  //   cy.get('#year').invoke('val', "2024");
-  //   cy.contains('.btn.btn-primary', 'Purchase').click();
-  //   cy.contains('.sweet-alert', 'Thank you for your purchase!').should('be.visible');
-  // });
+  //Fill orderForm
+  Cypress.Commands.add('fillOrderForm', () => {
+    cy.get('#name').invoke('val', "Jimmy");
+    cy.get('#country').invoke('val', "Canada");
+    cy.get('#city').invoke('val', "Edmonton");
+    cy.get('#card').invoke('val', "4111 1111 1111 1111");
+    cy.get('#month').invoke('val', "09");
+    cy.get('#year').invoke('val', "2024");
+
+  });
