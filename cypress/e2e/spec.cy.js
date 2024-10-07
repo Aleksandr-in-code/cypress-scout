@@ -1,4 +1,4 @@
-
+// Cypress._.times(10, () => {
 describe('E2E Tests of demoblaze.com', () => {
 
   const signUsername = ("Tesg" + Date.now());
@@ -11,6 +11,7 @@ describe('E2E Tests of demoblaze.com', () => {
   beforeEach(() => {
     cy.visit('https://www.demoblaze.com/');
     cy.intercept('Post', '/deletecart').as('deletecart');
+    cy.intercept('POST', '/viewcart').as('viewcart');
 
   });
 
@@ -19,7 +20,9 @@ describe('E2E Tests of demoblaze.com', () => {
       cy.contains('.hrefch', monitorName).should('be.visible').click();
       cy.contains('a.btn', 'Add to cart').click();
       cy.get('#cartur').click();
+      cy.wait('@viewcart');
       cy.contains('.success', monitorName).should('be.visible');
+      cy.expect('.success').to.have.length.at.least(1); // .should('have.length', 1)
       cy.contains('.btn.btn-success', 'Place Order').click();
       cy.get('#name').invoke('val', "Jimmy");
       cy.get('#country').invoke('val', "Canada");
@@ -38,7 +41,9 @@ describe('E2E Tests of demoblaze.com', () => {
       cy.contains('.hrefch', laptopName).click();
       cy.contains('a.btn', 'Add to cart').click();
       cy.get('#cartur').click();
-      cy.contains('.success', laptopName).should('be.visible');
+      cy.wait('@viewcart');
+      cy.contains('.success', laptopName, { timeout: 10000 }).should('be.visible');
+      cy.expect('.success').to.have.length.at.least(1); // .should('have.length', 1)
       cy.contains('.btn.btn-success', 'Place Order').click();
       cy.get('#name').invoke('val', "Jimmy");
       cy.get('#country').invoke('val', "Canada");
@@ -57,7 +62,9 @@ describe('E2E Tests of demoblaze.com', () => {
       cy.contains('.hrefch', phoneName).click();
       cy.contains('a.btn', 'Add to cart').click();
       cy.get('#cartur').click();
-      cy.contains('.success', phoneName).should('be.visible');
+      cy.wait('@viewcart');
+      cy.contains('.success', phoneName, { timeout: 10000 }).should('be.visible');
+      cy.expect('.success').to.have.length.at.least(1);
       cy.contains('.btn.btn-success', 'Place Order').click();
       cy.get('#name').invoke('val', "Jimmy");
       cy.get('#country').invoke('val', "Canada");
@@ -70,3 +77,4 @@ describe('E2E Tests of demoblaze.com', () => {
       cy.wait('@deletecart').its('response.statusCode').should('eq', 200);
     });
 });
+// });
