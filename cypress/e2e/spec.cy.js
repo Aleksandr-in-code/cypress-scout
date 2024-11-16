@@ -1,5 +1,6 @@
 
-const newUsername = ("TesgQwe" + Date.now());
+const newUsername = ("Tes" + Date.now());
+const newUsername1 = ("Ts" + Date.now()); // because there are two tests with registration
 const password = "Qwerty123";
 const staticUsername = "StaticUsername";
 const monitorName = 'Apple monitor 24';
@@ -17,6 +18,7 @@ const phoneName = 'Samsung galaxy s6';
       cy.intercept('POST', '/signup').as("signupUser");
       cy.get('#signin2').click();
       cy.get('#sign-username').invoke('val', newUsername);
+      console.log(newUsername);
       cy.get('#sign-password').invoke('val', password);
       cy.contains('.btn.btn-primary', 'Sign up').click();
       cy.wait('@signupUser', { timeout: 10000 }).its('response.statusCode').should('eq', 200);
@@ -58,7 +60,8 @@ const phoneName = 'Samsung galaxy s6';
     });
     
     it('As a user, Purchase a laptop through registration', () => {
-      cy.signUp(newUsername, password);
+      cy.signUp(newUsername1, password);
+      console.log(newUsername1);
       cy.contains('#itemc', 'Laptops').click();
       cy.contains('.hrefch', laptopName).click();
       cy.contains('a.btn', 'Add to cart').click();
