@@ -1,5 +1,5 @@
 
-const newUsername = ("Tesg" + Date.now());
+const newUsername = ("TesgQwe" + Date.now());
 const password = "Qwerty123";
 const staticUsername = "StaticUsername";
 const monitorName = 'Apple monitor 24';
