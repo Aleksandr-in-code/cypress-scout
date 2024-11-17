@@ -60,6 +60,8 @@ function generateUniqueUsername() {
     
     it('As a user, Purchase a laptop through registration', () => {
       cy.signUp(generateUniqueUsername(), password);
+      cy.contains('.btn.btn-primary', 'Sign up').click();
+      cy.wait('@signupUser', { timeout: 10000 });
       cy.contains('#itemc', 'Laptops').click();
       cy.contains('.hrefch', laptopName).click();
       cy.contains('a.btn', 'Add to cart').click();
