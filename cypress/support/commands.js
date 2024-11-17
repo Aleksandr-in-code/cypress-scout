@@ -29,10 +29,7 @@ Cypress.Commands.add('signUp', (username, password) => {
     cy.intercept('POST', '/signup').as("signupUser");
     cy.get('#signin2').click();
     cy.get('#sign-username').invoke('val', username);
-    cy.get('#sign-password').invoke('val', password);
-    cy.contains('.btn.btn-primary', 'Sign up').click();
-    cy.wait('@signupUser', { timeout: 10000 });
-    
+    cy.get('#sign-password').invoke('val', password);   
   });
 
 // login demoblaze.com
@@ -52,6 +49,5 @@ Cypress.Commands.add('signUp', (username, password) => {
     cy.get('#city').invoke('val', "Edmonton");
     cy.get('#card').invoke('val', "4111 1111 1111 1111");
     cy.get('#month').invoke('val', "09");
-    cy.get('#year').invoke('val', "2024");
-
-  });
+    cy.get('#year').invoke('val', "2026");
+});

@@ -19,8 +19,13 @@ function generateUniqueUsername() {
     });
     
     it('Registration of a new user with a valid email address and password', () => {
-      cy.signUp(generateUniqueUsername(), password);
-      cy.get('@signupUser').its('response.statusCode').should('eq', 200);
+      cy.signUp(generateUniqueUsername(), password)
+      cy.window().then((win) => {
+        cy.stub(win, 'alert').as('winAlert');
+      });
+      cy.contains('.btn.btn-primary', 'Sign up').click();
+      cy.wait('@signupUser', { timeout: 10000 }).its('response.statusCode').should('eq', 200);;
+      cy.get('@winAlert').should('be.calledWith', 'Sign up successful.');  
     });
 
     it('User authorization with a valid email address and password', () => {
@@ -35,8 +40,7 @@ function generateUniqueUsername() {
     beforeEach(() => {
       cy.visit('/');
       cy.intercept('Post', '/deletecart').as('deletecart');
-      cy.intercept('POST', '/viewcart').as('viewcart');
-      
+      cy.intercept('POST', '/viewcart').as('viewcart');  
     });  
 
     it('As a user, purchase a monitor without authorization and registration', () => {
