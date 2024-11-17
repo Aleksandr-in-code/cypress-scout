@@ -18,23 +18,13 @@ function generateUniqueUsername() {
     });
     
     it('Registration of a new user with a valid email address and password', () => {
-      cy.intercept('POST', '/signup').as("signupUser");
-      cy.get('#signin2').click();
-      cy.get('#sign-username').invoke('val', generateUniqueUsername());
-      console.log(generateUniqueUsername());
-      cy.get('#sign-password').invoke('val', password);
-      cy.contains('.btn.btn-primary', 'Sign up').click();
-      cy.wait('@signupUser', { timeout: 10000 }).its('response.statusCode').should('eq', 200);
+      cy.signUp(generateUniqueUsername(), password);
+      cy.get('@signupUser').its('response.statusCode').should('eq', 200);
     });
 
     it('User authorization with a valid email address and password', () => {
-      cy.intercept('POST', '/login').as("loginUser");
-      cy.get('#login2').click();
-      cy.get('#loginusername').invoke('val', staticUsername);
-      cy.get('#loginpassword').invoke('val', password);
-      cy.contains('.btn.btn-primary', 'Log in').click();
-      cy.wait('@loginUser', { timeout: 10000 }).its('response.statusCode').should('eq', 200);
-      cy.contains('#nameofuser', staticUsername).should('be.visible');
+      cy.login(staticUsername, password);
+      cy.get('@loginUser').its('response.statusCode').should('eq', 200);
       });
   });
 
