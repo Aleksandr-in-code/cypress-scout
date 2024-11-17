@@ -11,6 +11,7 @@ function generateUniqueUsername() {
 }
 
 // Cypress._.times(10, () => {
+  
   describe('Registration and authorization', () => {
 
     beforeEach(() => {
@@ -55,7 +56,6 @@ function generateUniqueUsername() {
     
     it('As a user, Purchase a laptop through registration', () => {
       cy.signUp(generateUniqueUsername(), password);
-      console.log(generateUniqueUsername());
       cy.contains('#itemc', 'Laptops').click();
       cy.contains('.hrefch', laptopName).click();
       cy.contains('a.btn', 'Add to cart').click();
