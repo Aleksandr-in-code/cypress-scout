@@ -25,6 +25,7 @@ function generateUniqueUsername() {
     it('User authorization with a valid email address and password', () => {
       cy.login(staticUsername, password);
       cy.get('@loginUser').its('response.statusCode').should('eq', 200);
+      cy.contains('#nameofuser', staticUsername).should('be.visible');
       });
   });
 
