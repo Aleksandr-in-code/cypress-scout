@@ -19,12 +19,11 @@ function generateUniqueUsername() {
     });
     
     it('Registration of a new user with a valid email address and password', () => {
-      cy.signUp(generateUniqueUsername(), password)
       cy.window().then((win) => {
         cy.stub(win, 'alert').as('winAlert');
       });
-      cy.contains('.btn.btn-primary', 'Sign up').click();
-      cy.wait('@signupUser', { timeout: 10000 }).its('response.statusCode').should('eq', 200);;
+      cy.signUp(generateUniqueUsername(), password)
+      cy.get('@signupUser').its('response.statusCode').should('eq', 200);;
       cy.get('@winAlert').should('be.calledWith', 'Sign up successful.');  
     });
 
@@ -60,8 +59,6 @@ function generateUniqueUsername() {
     
     it('As a user, Purchase a laptop through registration', () => {
       cy.signUp(generateUniqueUsername(), password);
-      cy.contains('.btn.btn-primary', 'Sign up').click();
-      cy.wait('@signupUser', { timeout: 10000 });
       cy.contains('#itemc', 'Laptops').click();
       cy.contains('.hrefch', laptopName).click();
       cy.contains('a.btn', 'Add to cart').click();

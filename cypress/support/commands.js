@@ -29,7 +29,9 @@ Cypress.Commands.add('signUp', (username, password) => {
     cy.intercept('POST', '/signup').as("signupUser");
     cy.get('#signin2').click();
     cy.get('#sign-username').invoke('val', username);
-    cy.get('#sign-password').invoke('val', password);   
+    cy.get('#sign-password').invoke('val', password);
+    cy.contains('.btn.btn-primary', 'Sign up').click();
+    cy.wait('@signupUser', { timeout: 10000 });
   });
 
 // login demoblaze.com
