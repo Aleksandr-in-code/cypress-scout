@@ -52,4 +52,19 @@ Cypress.Commands.add('signUp', (username, password) => {
     cy.get('#card').invoke('val', "4111 1111 1111 1111");
     cy.get('#month').invoke('val', "09");
     cy.get('#year').invoke('val', "2026");
-});
+  });
+
+  //add Product To Cart
+  Cypress.Commands.add('addToCart', (itemName) => {
+    cy.intercept('POST', '/addtocart').as('addtocart');
+    cy.contains('.hrefch', itemName).click();
+    cy.contains('a.btn', 'Add to cart').click();
+    cy.wait('@addtocart');
+  });
+
+  //open Cart
+  Cypress.Commands.add('openCart', () => {
+    cy.intercept('POST', '/viewcart').as('viewcart'); 
+    cy.get('#cartur').click();
+    cy.wait('@viewcart');
+  });

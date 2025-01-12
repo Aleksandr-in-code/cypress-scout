@@ -7,14 +7,12 @@ const monitorName = 'Apple monitor 24';
 const laptopName = 'Sony vaio i5';
 const phoneName = 'Samsung galaxy s6';
  
-
+  beforeEach(() => {
+    cy.visit('/');
+  });
   
   describe('User Registration and Log in', () => {
-
-    beforeEach(() => {
-      cy.visit('/');
-    });
-    
+ 
     it('should successfully register a new user', () => {
       cy.window().then((win) => {
         cy.stub(win, 'alert').as('winAlert');
@@ -32,19 +30,15 @@ const phoneName = 'Samsung galaxy s6';
   });
 
   describe('Product Purchase Tests', () => {
-
     beforeEach(() => {
-      cy.visit('/');
       cy.intercept('Post', '/deletecart').as('deletecart');
-      cy.intercept('POST', '/viewcart').as('viewcart');  
-    });  
-
+    });
+  
+  
     it('should purchase the monitor without authorization and registration', () => {
       cy.contains('#itemc', 'Monitors').click();
-      cy.contains('.hrefch', monitorName).should('be.visible').click();
-      cy.contains('a.btn', 'Add to cart').click();
-      cy.get('#cartur').click();
-      cy.wait('@viewcart');
+      cy.addToCart(monitorName);
+      cy.openCart();
       cy.contains('.success', monitorName, { timeout: 10000 }).should('be.visible');
       cy.get('.success').should('have.length.at.least', 1);
       cy.contains('.btn.btn-success', 'Place Order').click();
@@ -57,10 +51,8 @@ const phoneName = 'Samsung galaxy s6';
     it('should purchase the laptop via registration flow', () => {
       cy.signUp(generateUniqueUsername(), password);
       cy.contains('#itemc', 'Laptops').click();
-      cy.contains('.hrefch', laptopName).click();
-      cy.contains('a.btn', 'Add to cart').click();
-      cy.get('#cartur').click();
-      cy.wait('@viewcart');
+      cy.addToCart(laptopName);
+      cy.openCart();
       cy.contains('.success', laptopName, { timeout: 10000 }).should('be.visible');
       cy.get('.success').should('have.length.at.least', 1);
       cy.contains('.btn.btn-success', 'Place Order').click();
@@ -73,10 +65,8 @@ const phoneName = 'Samsung galaxy s6';
 
     it('should purchase the phone via authorization flow', () => {
       cy.login(existingUsername, password);
-      cy.contains('.hrefch', phoneName).click();
-      cy.contains('a.btn', 'Add to cart').click();
-      cy.get('#cartur').click();
-      cy.wait('@viewcart');
+      cy.addToCart(phoneName);
+      cy.openCart();
       cy.contains('.success', phoneName, { timeout: 10000 }).should('be.visible');
       cy.get('.success').should('have.length.at.least', 1);
       cy.contains('.btn.btn-success', 'Place Order').click();
