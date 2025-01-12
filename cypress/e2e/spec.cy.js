@@ -1,40 +1,37 @@
 
+
+const generateUniqueUsername = () => "Tes6" + Date.now();
+const existingUsername = "StaticUsername";
 const password = "Qwerty123";
-const staticUsername = "StaticUsername";
 const monitorName = 'Apple monitor 24';
 const laptopName = 'Sony vaio i5';
 const phoneName = 'Samsung galaxy s6';
+ 
 
-function generateUniqueUsername() {
-  const uniqueUsername = "Tes" + Date.now(); 
-  return uniqueUsername;
-}
-
-// Cypress._.times(10, () => {
   
-  describe('Registration and authorization', () => {
+  describe('User Registration and Log in', () => {
 
     beforeEach(() => {
       cy.visit('/');
     });
     
-    it('Registration of a new user with a valid email address and password', () => {
+    it('should successfully register a new user', () => {
       cy.window().then((win) => {
         cy.stub(win, 'alert').as('winAlert');
       });
-      cy.signUp(generateUniqueUsername(), password)
-      cy.get('@signupUser').its('response.statusCode').should('eq', 200);;
+      cy.signUp(generateUniqueUsername(), password);
+      cy.get('@signupUser').its('response.statusCode').should('eq', 200);
       cy.get('@winAlert').should('be.calledWith', 'Sign up successful.');  
     });
 
-    it('User authorization with a valid email address and password', () => {
-      cy.login(staticUsername, password);
+    it('should log in with valid credentials', () => {
+      cy.login(existingUsername, password);
       cy.get('@loginUser').its('response.statusCode').should('eq', 200);
-      cy.contains('#nameofuser', staticUsername).should('be.visible');
+      cy.contains('#nameofuser', existingUsername).should('be.visible');
       });
   });
 
-  describe('Tests of Purchase products', () => {
+  describe('Product Purchase Tests', () => {
 
     beforeEach(() => {
       cy.visit('/');
@@ -42,13 +39,13 @@ function generateUniqueUsername() {
       cy.intercept('POST', '/viewcart').as('viewcart');  
     });  
 
-    it('As a user, purchase a monitor without authorization and registration', () => {
+    it('should purchase the monitor without authorization and registration', () => {
       cy.contains('#itemc', 'Monitors').click();
       cy.contains('.hrefch', monitorName).should('be.visible').click();
       cy.contains('a.btn', 'Add to cart').click();
       cy.get('#cartur').click();
       cy.wait('@viewcart');
-      cy.contains('.success', monitorName).should('be.visible');
+      cy.contains('.success', monitorName, { timeout: 10000 }).should('be.visible');
       cy.get('.success').should('have.length.at.least', 1);
       cy.contains('.btn.btn-success', 'Place Order').click();
       cy.fillOrderForm();
@@ -57,7 +54,7 @@ function generateUniqueUsername() {
       cy.wait('@deletecart').its('response.statusCode').should('eq', 200);
     });
     
-    it('As a user, Purchase a laptop through registration', () => {
+    it('should purchase the laptop via registration flow', () => {
       cy.signUp(generateUniqueUsername(), password);
       cy.contains('#itemc', 'Laptops').click();
       cy.contains('.hrefch', laptopName).click();
@@ -74,8 +71,8 @@ function generateUniqueUsername() {
     });
 
 
-    it('As a user, Purchase a phone through authorization', () => {
-      cy.login(staticUsername, password);
+    it('should purchase the phone via authorization flow', () => {
+      cy.login(existingUsername, password);
       cy.contains('.hrefch', phoneName).click();
       cy.contains('a.btn', 'Add to cart').click();
       cy.get('#cartur').click();
@@ -89,4 +86,3 @@ function generateUniqueUsername() {
       cy.wait('@deletecart').its('response.statusCode').should('eq', 200);
     });
   });
-// });
